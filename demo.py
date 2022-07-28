@@ -13,16 +13,16 @@ def load_image(img_path):
     img = img[tf.newaxis, :]
     return img
 
-content_image = load_image('images/content/otter.jpg')
+content_image = load_image('images/content/hummingbird.png')
 style_image = load_image('images/style/the_scream.png')
 
-stylized_image = model(tf.constant(content_image), tf.constant(style_image))[0]
+stylised_image = model(tf.constant(content_image), tf.constant(style_image))[0].numpy()
 
 f, ax = plt.subplots(nrows=1, ncols=3)
 ax[0].imshow(np.squeeze(content_image))
 ax[0].axis('off')
 ax[1].imshow(np.squeeze(style_image))
 ax[1].axis('off')
-ax[2].imshow(np.squeeze(stylized_image))
+ax[2].imshow(np.squeeze(stylised_image))
 ax[2].axis('off')
 plt.show()
