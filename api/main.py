@@ -1,4 +1,5 @@
 from fastapi import FastAPI, File, UploadFile, Response
+from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import numpy as np
 import io
@@ -9,6 +10,19 @@ import cv2
 from starlette.responses import StreamingResponse
 
 app = FastAPI()
+
+origins = [
+    "http://localhost",
+    "http://localhost:3000"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 model = hub.load('../nst_model')
 
 def read_file_as_image(data):

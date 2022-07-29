@@ -3,7 +3,10 @@ import placeholderimage from './images/default-image-placeholder.png'
 
 export function ImageUpload() {
 
+    const axios = require("axios").default;
+
     const [contentImage, setContentImage] = useState(placeholderimage);
+    const [fileContentImage, setFileContentImage] = useState(null);
 
     const imageHandler = (e) => {
         const reader = new FileReader();
@@ -12,7 +15,25 @@ export function ImageUpload() {
                 setContentImage(reader.result)
             }
         }
+        setFileContentImage(e.target.files[0])
         reader.readAsDataURL(e.target.files[0])
+    }
+
+    const sendFile = async () => {
+
+        let url = "http://localhost:8000/generate_stylised_image";
+
+        let formData = new FormData();
+        formData.append("file", fileContentImage);
+
+        axios.post(url, formData)
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
     }
 
   return (
@@ -24,6 +45,7 @@ export function ImageUpload() {
                 <img src={contentImage} alt="placeholder" height="auto" width="40%" id="content-img" className="content-img" />
             </div>
             <input type="file" accept="image/*" name="image-upload" id="input" onChange={imageHandler}/>
+            <button onClick={sendFile}>Stylise the image</button>
 
         </div>
     </div>
