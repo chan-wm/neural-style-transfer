@@ -2,15 +2,14 @@ import React, { useState } from 'react'
 import placeholderimage from './images/default-image-placeholder.png'
 
 export function ImageUpload() {
+    const axios = require("axios").default
 
-    const axios = require("axios").default;
-
-    const [contentImage, setContentImage] = useState(placeholderimage);
-    const [fileContentImage, setFileContentImage] = useState(null);
-    const [stylisedImage, setStylisedImage] = useState(null);
+    const [contentImage, setContentImage] = useState(placeholderimage)
+    const [fileContentImage, setFileContentImage] = useState(null)
+    const [stylisedImage, setStylisedImage] = useState(null)
 
     const imageHandler = (e) => {
-        const reader = new FileReader();
+        const reader = new FileReader()
         reader.onload = () => {
             if(reader.readyState === 2){
                 setContentImage(reader.result)
@@ -21,22 +20,25 @@ export function ImageUpload() {
     }
 
     const sendFile = async () => {
+        let url = "http://localhost:8000/generate_stylised_image"
 
-        let url = "http://localhost:8000/generate_stylised_image";
-
-        let formData = new FormData();
-        formData.append("file", fileContentImage);
+        let formData = new FormData()
+        formData.append("file", fileContentImage)
 
         axios.post(url, formData)
             .then(response => {
-                console.log(response)
-                console.log(response.data)
                 setStylisedImage(response.data.encoded_img)
             })
             .catch(error => {
                 console.log(error)
             })
+    }
 
+    const downloadImage = () => {
+        const a = document.createElement("a")
+        a.download = "stylised_image.png"
+        a.href = "data:image/png;base64," + stylisedImage
+        a.click()
     }
 
   return (
@@ -53,6 +55,7 @@ export function ImageUpload() {
             <div>
                 <img src={`data:image/jpeg;base64,${stylisedImage}`} alt="" height="auto" width="50%"/>
             </div>
+            <button onClick={downloadImage}>Download</button>
 
         </div>
     </div>
