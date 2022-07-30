@@ -7,6 +7,7 @@ export function ImageUpload() {
 
     const [contentImage, setContentImage] = useState(placeholderimage);
     const [fileContentImage, setFileContentImage] = useState(null);
+    const [stylisedImage, setStylisedImage] = useState(null);
 
     const imageHandler = (e) => {
         const reader = new FileReader();
@@ -28,7 +29,9 @@ export function ImageUpload() {
 
         axios.post(url, formData)
             .then(response => {
-                console.log(response);
+                console.log(response)
+                console.log(response.data)
+                setStylisedImage(response.data.encoded_img)
             })
             .catch(error => {
                 console.log(error)
@@ -42,10 +45,14 @@ export function ImageUpload() {
         <div className="container">
             <h2 className="add-image-heading">Add your image</h2>
             <div className="img-holder">
-                <img src={contentImage} alt="placeholder" height="auto" width="40%" id="content-img" className="content-img" />
+                <img src={contentImage} alt="placeholder" height="auto" width="50%" id="content-img" className="content-img" />
             </div>
             <input type="file" accept="image/*" name="image-upload" id="input" onChange={imageHandler}/>
             <button onClick={sendFile}>Stylise the image</button>
+            <h2>Stylised Image</h2>
+            <div>
+                <img src={`data:image/jpeg;base64,${stylisedImage}`} alt="" height="auto" width="50%"/>
+            </div>
 
         </div>
     </div>

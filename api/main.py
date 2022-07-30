@@ -8,6 +8,7 @@ import tensorflow as tf
 import tensorflow_hub as hub
 import cv2
 from starlette.responses import StreamingResponse
+import base64
 
 app = FastAPI()
 
@@ -48,9 +49,15 @@ async def genereate_stylised_image(
 ):
     content_image = read_file_as_image(await file.read())
     style_image = load_image_locally("../images/style/the_scream.png")
-    stylised_image = model(tf.constant(content_image), tf.constant(style_image))[0]
-    # stylised_image = model(tf.constant(content_image), tf.constant(style_image))[0].numpy()
-    cv2.imwrite('generated_img.png', cv2.cvtColor(np.squeeze(stylised_image)*255, cv2.COLOR_BGR2RGB))
+    stylised_image = model(tf.constant(content_image), tf.constant(style_image))[0].numpy()
+    stylised_image = cv2.cvtColor(np.squeeze(stylised_image)*255, cv2.COLOR_BGR2RGB)
+    
+    _, encoded_img = cv2.imencode('.PNG', stylised_image)
+    encoded_image = base64.b64encode(encoded_img)
+
+    cv2.imwrite('generated_img.png', stylised_image)
+
+    return {'encoded_img' : encoded_image}
 
     # return StreamingResponse(io.BytesIO(stylised_image.tobytes()), media_type="image/png")
 
