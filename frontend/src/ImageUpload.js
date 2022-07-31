@@ -24,6 +24,7 @@ export function ImageUpload() {
 
         let formData = new FormData()
         formData.append("file", fileContentImage)
+        formData.append("style_image_string", "pattern2")
 
         axios.post(url, formData)
             .then(response => {

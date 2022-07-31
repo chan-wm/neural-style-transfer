@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File, UploadFile, Response
+from fastapi import Body, FastAPI, File, UploadFile, Response
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import numpy as np
@@ -45,10 +45,12 @@ async def ping():
 
 @app.post("/generate_stylised_image")
 async def genereate_stylised_image(
-    file: UploadFile = File(...)
+    file: UploadFile = File(...),
+    style_image_string: str = Body(...)
 ):
+
     content_image = read_file_as_image(await file.read())
-    style_image = load_image_locally("../images/style/the_scream.png")
+    style_image = load_image_locally(f"images/style/{style_image_string}.png")
     stylised_image = model(tf.constant(content_image), tf.constant(style_image))[0].numpy()
     stylised_image = cv2.cvtColor(np.squeeze(stylised_image)*255, cv2.COLOR_BGR2RGB)
 
