@@ -13,23 +13,29 @@ import violin_and_checkerboard from './images/violin_and_checkerboard.png'
 
 import hummingbird from './images/hummingbird.png'
 import default_stylised_image_b64 from './default_stylised_image_b64'
+import default_content_image_b64 from './default_content_image_b64'
 
 export function ImageUpload() {
+
+    function dataURLtoFile(dataurl, filename) {
+        var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+            while(n--){
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            return new File([u8arr], filename, {type:mime});
+    }
+
+    var file = dataURLtoFile(default_content_image_b64, 'hummingbird.png');
+
     const axios = require("axios").default
 
     const [chosenStyleImage, setChosenStyleImage] = useState(a_lady_holding_a_flower)
     const [chosenStyleImageCaption, setConsenStyleImageCaption] = useState("A Lady Holding A Flower")
 
     const [contentImage, setContentImage] = useState(hummingbird)
-    const [fileContentImage, setFileContentImage] = useState(null)
+    const [fileContentImage, setFileContentImage] = useState(file)
     const [stylisedImage, setStylisedImage] = useState(default_stylised_image_b64)
-
-    function srcToFile(src, fileName, mimeType){
-        return (fetch(src)
-            .then(function(res){return res.arrayBuffer();})
-            .then(function(buf){return new File([buf], fileName, {type:mimeType});})
-        );
-    }
 
     var dict ={}
     dict["candy"] = [candy, "Candy"]
@@ -52,7 +58,6 @@ export function ImageUpload() {
             }
         }
         setFileContentImage(e.target.files[0])
-        console.log(e.target.files[0])
         reader.readAsDataURL(e.target.files[0])
     }
 
