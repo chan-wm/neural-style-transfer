@@ -1,25 +1,41 @@
 import React, { useState } from 'react'
-import { Button, Container, Row, Col, Card } from 'react-bootstrap'
+import { Button, Container, Row, Col, Card, Form } from 'react-bootstrap'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'mdb-react-ui-kit/dist/css/mdb.min.css'
-import placeholderimage from './images/default-image-placeholder.png'
 
-import the_scream from './images/the_scream.png'
-import the_starry_night from './images/the_starry_night.png'
 import candy from './images/candy.png'
+import the_starry_night from './images/the_starry_night.png'
+import a_lady_holding_a_flower from './images/a_lady_holding_a_flower.png'
+import the_scream from './images/the_scream.png'
 import feathers from './images/feathers.png'
 import violin_and_checkerboard from './images/violin_and_checkerboard.png'
-import a_lady_holding_a_flower from './images/a_lady_holding_a_flower.png'
-// import hanuman from './images/hanuman.png'
-// import poet_on_a_mountaintop from './images/poet_on_a_mountaintop.png'
+
+import hummingbird from './images/hummingbird.png'
+import default_stylised_image_b64 from './deafult_stylised_image_b64'
 
 export function ImageUpload() {
     const axios = require("axios").default
 
-    const [contentImage, setContentImage] = useState(placeholderimage)
+    const [chosenStyleImage, setChosenStyleImage] = useState(a_lady_holding_a_flower)
+    const [chosenStyleImageCaption, setConsenStyleImageCaption] = useState("A Lady Holding A Flower")
+
+    const [contentImage, setContentImage] = useState(hummingbird)
     const [fileContentImage, setFileContentImage] = useState(null)
-    const [stylisedImage, setStylisedImage] = useState(null)
+    const [stylisedImage, setStylisedImage] = useState(default_stylised_image_b64)
+
+    var dict ={}
+    dict["candy"] = [candy, "Candy"]
+    dict["the_starry_night"] = [the_starry_night, "The Starry Night"]
+    dict["a_lady_holding_a_flower"] = [a_lady_holding_a_flower, "A Lady Holding A Flower"]
+    dict["the_scream"] = [the_scream, "The Scream"]
+    dict["feathers"] = [feathers, "Feathers"]
+    dict["violin_and_checkerboard"] = [violin_and_checkerboard, "Violin And Checkerboard"]
+
+    const onSelectStyleImageCard = (e) => {
+        setChosenStyleImage(dict[e.target.id][0])
+        setConsenStyleImageCaption(dict[e.target.id][1])
+    }
 
     const imageHandler = (e) => {
         const reader = new FileReader()
@@ -37,7 +53,7 @@ export function ImageUpload() {
 
         let formData = new FormData()
         formData.append("file", fileContentImage)
-        formData.append("style_image_string", "the_scream")
+        formData.append("style_image_string", "a_lady_holding_a_flower")
 
         axios.post(url, formData)
             .then(response => {
@@ -57,29 +73,28 @@ export function ImageUpload() {
 
   return (
     <div className="ImageUpload">
-        <Container>
+        <Container style={{ textAlign: 'center'}}>
         <h1>Neural Style Transfer</h1>
+        <h2>Choose your style image</h2>
         <Row className="align-items-center">
             <Col md>
-                <Card className="mb-3" style={{ textAlign: 'center'}} >
-                    <Card.Img src={candy}/>
-                    <Card.Title>Candy</Card.Title>
+                <Card id="candy" className="mb-3" onClick={onSelectStyleImageCard} style={{cursor:'pointer'}}>
+                    <Card.Img id="candy" className="mb-3" src={candy}/>
+                    <Card.Title id="candy" className="mb-3" style={{fontWeight:'bold'}}>Candy</Card.Title>
                 </Card>
             </Col>
 
             <Col md>
-                <div className="align-self-center">
-                <Card className="mb-3" style={{ textAlign: 'center'}}>
-                    <Card.Img src={the_starry_night}/>
-                    <Card.Title>The Starry Night</Card.Title>
+                <Card id="the_starry_night" className="mb-3" onClick={onSelectStyleImageCard} style={{cursor:'pointer'}}>
+                    <Card.Img id="the_starry_night" className="mb-3" src={the_starry_night}/>
+                    <Card.Title id="the_starry_night" style={{fontWeight:'bold'}}>The Starry Night</Card.Title>
                 </Card>
-                </div>
             </Col>
 
             <Col md>
-                <Card className="mb-3" style={{ textAlign: 'center'}}>
-                    <Card.Img src={a_lady_holding_a_flower}/>
-                    <Card.Title>A Lady Holding A Flower</Card.Title>
+                <Card id="a_lady_holding_a_flower" className="mb-3" onClick={onSelectStyleImageCard} style={{cursor:'pointer'}}>
+                    <Card.Img id="a_lady_holding_a_flower" className="mb-3" src={a_lady_holding_a_flower}/>
+                    <Card.Title id="a_lady_holding_a_flower" style={{fontWeight:'bold'}}>A Lady Holding A Flower</Card.Title>
                 </Card>
             </Col>
 
@@ -87,41 +102,53 @@ export function ImageUpload() {
 
         <Row className="align-items-center">
             <Col md>
-                <Card className="mb-3" style={{ textAlign: 'center'}}>
-                    <Card.Img src={the_scream}/>
-                    <Card.Title>Candy</Card.Title>
+                <Card id="the_scream" className="mb-3" onClick={onSelectStyleImageCard} style={{cursor:'pointer'}}>
+                    <Card.Img id="the_scream" className="mb-3" src={the_scream}/>
+                    <Card.Title id="the_scream" style={{fontWeight:'bold'}}>The Scream</Card.Title>
                 </Card>
             </Col>
 
             <Col md>
-                <Card className="mb-3" style={{ textAlign: 'center'}}>
-                    <Card.Img src={feathers}/>
-                    <Card.Title>Feathers</Card.Title>
+                <Card id="feathers" className="mb-3" onClick={onSelectStyleImageCard} style={{cursor:'pointer'}}>
+                    <Card.Img id="feathers" className="mb-3" src={feathers}/>
+                    <Card.Title id="feathers" style={{fontWeight:'bold'}}>Feathers</Card.Title>
                 </Card>
             </Col>
 
             <Col md>
-                <Card className="mb-3" style={{ textAlign: 'center'}}>
-                    <Card.Img src={violin_and_checkerboard}/>
-                    <Card.Title>Violin And Checkerboard</Card.Title>
+                <Card id="violin_and_checkerboard" className="mb-3" onClick={onSelectStyleImageCard} style={{cursor:'pointer'}}>
+                    <Card.Img id="violin_and_checkerboard" className="mb-3" src={violin_and_checkerboard}/>
+                    <Card.Title id="violin_and_checkerboard" style={{fontWeight:'bold'}}>Violin And Checkerboard</Card.Title>
                 </Card>
             </Col>
 
         </Row>
-        <div className="container">
-            <h2 className="add-image-heading">Add your image</h2>
-            <div className="img-holder">
-                <img src={contentImage} alt="placeholder" height="auto" width="50%" id="content-img" className="content-img" />
-            </div>
-            <input type="file" accept="image/*" name="image-upload" id="input" onChange={imageHandler}/>
-            <Button onClick={sendFile}>Stylise the image</Button>
-            <h2>Stylised Image</h2>
-            <div>
-                <img src={`data:image/jpeg;base64,${stylisedImage}`} alt="" height="auto" width="50%"/>
-            </div>
-            <Button onClick={downloadImage}>Download</Button>
-
-        </div>
+        <Row className="align-items-center">
+            <Col md>
+                <Card className="mb-3">
+                    <Card.Header as="h4" style={{fontWeight:'bold'}}>Chosen style image</Card.Header>
+                    <Card.Img className="mb-3" src={chosenStyleImage}/>
+                    <Card.Title style={{fontWeight:'bold'}}>{chosenStyleImageCaption}</Card.Title>
+                </Card>
+            </Col>
+            <Col md>
+                <Card className="mb-3">
+                    <Card.Header as="h4" style={{fontWeight:'bold'}}>Add your content image</Card.Header>
+                    <Card.Img className="mb-3" src={contentImage}/>
+                    <Form.Group controlId="formFile" className="mb-3 mx-3">
+                        <Form.Control type="file" onChange={imageHandler}/>
+                    </Form.Group>
+                </Card>
+            </Col>
+            <Button className="mb-3" onClick={sendFile}>Stylise the image</Button>
+        </Row>
+        <Row className="align-items-center">
+            <Card className="mb-3">
+                <Card.Header as="h4" style={{fontWeight:'bold'}}>Stylised image</Card.Header>
+                <Card.Img className="mb-3" src={`data:image/jpeg;base64,${stylisedImage}`} alt=""/>
+                <Button className="mb-3" onClick={downloadImage}>Download</Button>
+            </Card>
+        </Row>
         </Container>
     </div>
   );
