@@ -31,13 +31,6 @@ export function ImageUpload() {
         );
     }
 
-    srcToFile('./images/hummingbird.png', 'hummingbird.png', 'image/png')
-    .then(function(file){
-        setFileContentImage(file)
-    })
-
-    const varToString = varObj => Object.keys(varObj)[0]
-
     var dict ={}
     dict["candy"] = [candy, "Candy"]
     dict["the_starry_night"] = [the_starry_night, "The Starry Night"]
