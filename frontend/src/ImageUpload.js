@@ -12,7 +12,7 @@ import feathers from './images/feathers.png'
 import violin_and_checkerboard from './images/violin_and_checkerboard.png'
 
 import hummingbird from './images/hummingbird.png'
-import default_stylised_image_b64 from './deafult_stylised_image_b64'
+import default_stylised_image_b64 from './default_stylised_image_b64'
 
 export function ImageUpload() {
     const axios = require("axios").default
@@ -23,6 +23,20 @@ export function ImageUpload() {
     const [contentImage, setContentImage] = useState(hummingbird)
     const [fileContentImage, setFileContentImage] = useState(null)
     const [stylisedImage, setStylisedImage] = useState(default_stylised_image_b64)
+
+    function srcToFile(src, fileName, mimeType){
+        return (fetch(src)
+            .then(function(res){return res.arrayBuffer();})
+            .then(function(buf){return new File([buf], fileName, {type:mimeType});})
+        );
+    }
+
+    srcToFile('./images/hummingbird.png', 'hummingbird.png', 'image/png')
+    .then(function(file){
+        setFileContentImage(file)
+    })
+
+    const varToString = varObj => Object.keys(varObj)[0]
 
     var dict ={}
     dict["candy"] = [candy, "Candy"]
@@ -45,15 +59,17 @@ export function ImageUpload() {
             }
         }
         setFileContentImage(e.target.files[0])
+        console.log(e.target.files[0])
         reader.readAsDataURL(e.target.files[0])
     }
 
     const sendFile = async () => {
         let url = "http://localhost:8000/generate_stylised_image"
+        let style_image_string = chosenStyleImageCaption.toLowerCase().replace(" ", "_")
 
         let formData = new FormData()
         formData.append("file", fileContentImage)
-        formData.append("style_image_string", "a_lady_holding_a_flower")
+        formData.append("style_image_string", style_image_string)
 
         axios.post(url, formData)
             .then(response => {
