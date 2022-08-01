@@ -8,9 +8,11 @@ import 'mdb-react-ui-kit/dist/css/mdb.min.css'
 import candy from './images/candy.png'
 import the_starry_night from './images/the_starry_night.png'
 import a_lady_holding_a_flower from './images/a_lady_holding_a_flower.png'
+import seaport_with_a_big_tower from './images/seaport_with_a_big_tower.png'
 import the_scream from './images/the_scream.png'
 import feathers from './images/feathers.png'
 import violin_and_checkerboard from './images/violin_and_checkerboard.png'
+import kandinsky_composition_vii from './images/kandinsky_composition_vii.png'
 
 import hummingbird from './images/hummingbird.png'
 import default_stylised_image_b64 from './default_stylised_image_b64'
@@ -42,9 +44,11 @@ export function ImageUpload() {
     dict["candy"] = [candy, "Candy"]
     dict["the_starry_night"] = [the_starry_night, "The Starry Night"]
     dict["a_lady_holding_a_flower"] = [a_lady_holding_a_flower, "A Lady Holding A Flower"]
+    dict["seaport_with_a_big_tower"] = [seaport_with_a_big_tower, "Seaport With A Big Tower"]
     dict["the_scream"] = [the_scream, "The Scream"]
     dict["feathers"] = [feathers, "Feathers"]
     dict["violin_and_checkerboard"] = [violin_and_checkerboard, "Violin And Checkerboard"]
+    dict["kandinsky_composition_vii"] = [kandinsky_composition_vii, "Kandinsky Composition VII"]
 
     const onSelectStyleImageCard = (e) => {
         setChosenStyleImage(dict[e.target.id][0])
@@ -115,6 +119,13 @@ export function ImageUpload() {
                 </Card>
             </Col>
 
+            <Col md>
+                <Card id="seaport_with_a_big_tower" className="mb-3" onClick={onSelectStyleImageCard} style={{cursor:'pointer'}}>
+                    <Card.Img id="seaport_with_a_big_tower" className="mb-3" src={seaport_with_a_big_tower}/>
+                    <Card.Title id="seaport_with_a_big_tower" style={{fontWeight:'bold'}}>Seaport With A Big Tower</Card.Title>
+                </Card>
+            </Col>
+
         </Row>
 
         <Row className="align-items-center">
@@ -136,6 +147,13 @@ export function ImageUpload() {
                 <Card id="violin_and_checkerboard" className="mb-3" onClick={onSelectStyleImageCard} style={{cursor:'pointer'}}>
                     <Card.Img id="violin_and_checkerboard" className="mb-3" src={violin_and_checkerboard}/>
                     <Card.Title id="violin_and_checkerboard" style={{fontWeight:'bold'}}>Violin And Checkerboard</Card.Title>
+                </Card>
+            </Col>
+
+            <Col md>
+                <Card id="kandinsky_composition_vii" className="mb-3" onClick={onSelectStyleImageCard} style={{cursor:'pointer'}}>
+                    <Card.Img id="kandinsky_composition_vii" className="mb-3" src={kandinsky_composition_vii}/>
+                    <Card.Title id="kandinsky_composition_vii" style={{fontWeight:'bold'}}>Kandinsky Composition VII</Card.Title>
                 </Card>
             </Col>
 
