@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Container, Row, Col, Card, Form } from 'react-bootstrap'
+import ClipLoader from 'react-spinners/ClipLoader'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'mdb-react-ui-kit/dist/css/mdb.min.css'
@@ -32,10 +33,10 @@ export function ImageUpload() {
 
     const [chosenStyleImage, setChosenStyleImage] = useState(a_lady_holding_a_flower)
     const [chosenStyleImageCaption, setConsenStyleImageCaption] = useState("A Lady Holding A Flower")
-
     const [contentImage, setContentImage] = useState(hummingbird)
     const [fileContentImage, setFileContentImage] = useState(file)
     const [stylisedImage, setStylisedImage] = useState(default_stylised_image_b64)
+    const [loading, setLoading] = useState(false)
 
     var dict ={}
     dict["candy"] = [candy, "Candy"]
@@ -63,15 +64,17 @@ export function ImageUpload() {
 
     const sendFile = async () => {
         let url = "http://localhost:8000/generate_stylised_image"
-        let style_image_string = chosenStyleImageCaption.toLowerCase().replace(" ", "_")
+        let style_image_string = chosenStyleImageCaption.toLowerCase().replaceAll(" ", "_")
 
         let formData = new FormData()
         formData.append("file", fileContentImage)
         formData.append("style_image_string", style_image_string)
 
+        setStylisedImage(null)
         axios.post(url, formData)
             .then(response => {
                 setStylisedImage(response.data.encoded_img)
+                setLoading(false)
             })
             .catch(error => {
                 console.log(error)
@@ -154,13 +157,15 @@ export function ImageUpload() {
                     </Form.Group>
                 </Card>
             </Col>
-            <Button className="mb-3" onClick={sendFile}>Stylise the image</Button>
+            {/* <Button className="mb-3" onClick={sendFile}>Stylise the image</Button> */}
+            <Button className="mb-3" onClick={function(e){ sendFile(e); setLoading(true)}}>Stylise the image</Button>
         </Row>
         <Row className="align-items-center">
-            <Card className="mb-3">
+            <Card className="align-items-center mb-3">
                 <Card.Header as="h4" style={{fontWeight:'bold'}}>Stylised image</Card.Header>
+                <ClipLoader color="#24a0ed" loading={loading} size={150} />
                 <Card.Img className="mb-3" src={`data:image/jpeg;base64,${stylisedImage}`} alt=""/>
-                <Button className="mb-3" onClick={downloadImage}>Download</Button>
+                <Button className="mb-3" style={{width:'100%'}} onClick={downloadImage}>Download</Button>
             </Card>
         </Row>
         </Container>
