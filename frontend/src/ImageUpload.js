@@ -67,7 +67,7 @@ export function ImageUpload() {
     }
 
     const sendFile = async () => {
-        let url = "http://localhost:8000/generate_stylised_image"
+        let url = process.env.REACT_APP_API_HOST + "generate_stylised_image"
         let style_image_string = chosenStyleImageCaption.toLowerCase().replaceAll(" ", "_")
 
         let formData = new FormData()
