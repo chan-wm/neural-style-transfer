@@ -128,7 +128,7 @@ export function ImageUpload() {
 
         </Row>
 
-        <Row className="align-items-center">
+        <Row className="align-items-center mb-10">
             <Col md>
                 <Card id="the_scream" className="mb-3" onClick={onSelectStyleImageCard} style={{cursor:'pointer'}}>
                     <Card.Img id="the_scream" className="mb-3" src={the_scream}/>
@@ -158,6 +158,7 @@ export function ImageUpload() {
             </Col>
 
         </Row>
+
         <Row className="align-items-center">
             <Col md>
                 <Card className="mb-3">
