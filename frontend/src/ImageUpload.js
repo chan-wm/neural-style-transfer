@@ -95,7 +95,7 @@ export function ImageUpload() {
   return (
     <div className="ImageUpload">
         <Container style={{ textAlign: 'center'}}>
-        <h1>Neural Style Transfer</h1>
+        <h1 style={{margin:'25px', fontWeight:'bold'}}>Neural Style Transfer</h1>
         <h2>Choose your style image</h2>
         <Row className="align-items-center">
             <Col md>

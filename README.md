@@ -1,7 +1,17 @@
 # Neural Style Transfer
 
-## Setup for backend FastAPI (Python) server
+## About
+Neural style transfer is an optimization technique used to take two images— a content image and a style reference image (such as an artwork by a famous painter) and blend them together so the output image looks like the content image, but “painted” in the style of the style reference image.
 
+This repository contains the neural style transfer model, built using TensorFlow and stored at `nst_model` directory. The model is deployed using FastAPI. A simple demo script is available at `demo.py`.
+
+![demo output](images/demo_output.png)
+
+The frontend application was built using React, allowing the user to upload their content image and choose the style images.
+
+![frontend](images/frontend.png)
+
+## Setup for backend FastAPI (Python) server
 <ol>
     <li>Install Python</li>
     <li>Install the required Python packages</li>

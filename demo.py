@@ -14,7 +14,7 @@ def load_image(img_path):
     return img
 
 content_image = load_image('api/images/content/hummingbird.png')
-style_image = load_image('api/images/style/the_scream.png')
+style_image = load_image('api/images/style/feathers.png')
 
 stylised_image = model(tf.constant(content_image), tf.constant(style_image))[0].numpy()
 
