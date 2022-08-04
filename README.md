@@ -1,23 +1,31 @@
 # Neural Style Transfer
 
-![stylised_images_compiled](images/stylised_images_compiled.png)
+<p align="center">
+  <img src="images/stylised_images_compiled.png" />
+</p>
 
 ## About
 Neural style transfer is an optimization technique used to take two images — a content image and a style reference image (such as an artwork by a famous painter) and blend them together so the output image looks like the content image, but “painted” in the style of the style reference image.
 
 This repository contains the neural style transfer model, built using TensorFlow and stored at `nst_model` directory. A simple demo script is available at `demo.py`. The model is deployed on the backend FastAPI server.
 
-![demo output](images/demo_output.png)
+<p align="center">
+  <img src="images/demo_output.png" />
+</p>
 
 The frontend application was built using React, allowing the user to upload their content image and choose the style images.
 
-![frontend](images/frontend.png)
+<p align="center">
+  <img src="images/frontend.png" />
+</p>
 
 ## How it works?
 
 ### Convolutional neural networks and feature representation
 
-![VGG-19 architecture](images/vgg19-architecture.png)
+<p align="center">
+  <img src="images/vgg19-architecture.png" />
+</p>
 
 The deep learning model used in this project is a convolutional neural network (CNN) called VGG-19 which was trained on more than a million images from the ImageNet database. AS such, the network is able to detect many features in an image. The shallow layers capture simple patterns like straight line and edges while deep layers capture more complex features such as a face of a person or a wheel of a car. This is how features are representede in the CNN.
 
